@@ -14,7 +14,7 @@ RSpec.describe User, type: :model do
     context '新規登録できない場合' do
       it "emailが空では登録できない" do
         @user.email = ''
-        @user.valid?
+        @user.valid? #
         expect(@user.errors.full_messages).to include("Email can't be blank")
       end
 
@@ -32,8 +32,8 @@ RSpec.describe User, type: :model do
       end
 
       it 'passwordとpassword_confirmationが不一致では登録できない' do
-        @user.password = '123456'
-        @user.password_confirmation = '1234567'
+        @user.password = '1234'
+        @user.password_confirmation = '12345'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end  
@@ -49,6 +49,52 @@ RSpec.describe User, type: :model do
         @user.email = 'testmail'
         @user.valid?
         expect(@user.errors.full_messages).to include('Email is invalid')
+      end
+
+      it 'passwordは、半角英字のみでは登録できないこと' do
+          @user.password = 'abcdef'
+          @user.password_confirmation = 'abcdef'
+          @user.valid?
+          expect(@user.errors.full_messages).to include('Password is invalid. Input half-width characters and numbers.')
+      end
+         
+      it 'passwordは、半角数字のみでは登録できないこと' do
+          @user.password = '123456'
+          @user.password_confirmation = '123456'
+          @user.valid?
+          expect(@user.errors.full_messages).to include('Password is invalid. Input half-width characters and numbers.')
+      end 
+
+
+it 'passwordが半角英数字混合では有効であること' do
+            @user.password = 'abc123'
+            @user.password_confirmation = 'abc123'
+            expect(@user).to be_valid
+end
+      
+      it 'nameカナ(全角)は、名字が必須であること' do
+        @user.last_name_kana = nil
+        expect(@user).to be_invalid 
+      end
+
+      it 'nameカナ(全角)は、名前が必須であること' do
+        @user.first_name_kana = nil
+        expect(@user).to be_invalid
+      end
+
+      it 'name(全角)は、名字が必須であること' do
+        @user.last_name = nil
+        expect(@user).to be_invalid
+      end
+      it 'name(全角)は、名前が必須であること' do
+        @user.first_name = nil
+        expect(@user).to be_invalid
+      end
+
+      it '生年月日が必須であること' do
+        @user.birth_date = nil
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Birth date can\'t be blank')
       end
     end
   end
