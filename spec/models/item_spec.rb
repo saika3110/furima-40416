@@ -32,31 +32,31 @@ describe '商品出品' do
       end
 
       it 'カテゴリ情報がないと登録できない' do
-        @item.category_id = nil
+        @item.category_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Category can't be blank")
       end
 
       it '商品の状態情報が空では登録できない' do
-        @item.condition_id = nil
+        @item.condition_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Condition can't be blank")
       end
 
       it '配送料負担情報が空では登録できない' do
-        @item.shipping_cost_id = nil
+        @item.shipping_cost_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping cost can't be blank")
       end
 
       it '発送元地域が空では登録できない' do
-        @item.prefecture_id = nil
+        @item.prefecture_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Prefecture can't be blank")
       end
     
       it '発送までの日数情報が空では登録できない' do
-        @item.shipping_day_id = nil
+        @item.shipping_day_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping day can't be blank")
       end
@@ -67,13 +67,23 @@ describe '商品出品' do
         expect(@item.errors.full_messages).to include("Price can't be blank")
       end
 
-      it '価格が¥300~¥9,999,999の範囲外だと登録できない' do
+
+      it '価格が¥300未満だと登録できない' do
         @item.price = 299
         @item.valid?
         expect(@item.errors.full_messages).to include("Price must be greater than or equal to 300")
+      end
+      
+      it '価格が¥10,000,000以上だと登録できない' do
         @item.price = 10_000_000
         @item.valid?
         expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999")
+      end
+      
+      it 'userが紐づいていないと保存できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("User must exist")
       end
 
       it '価格が半角数字のみで保存可能であることを確認する' do
