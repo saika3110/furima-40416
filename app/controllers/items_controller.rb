@@ -2,7 +2,8 @@ class ItemsController < ApplicationController
 before_action :authenticate_user!, only: [:new, :create]
 
   def index
-      #@items = Item.all
+    @items = Item.all
+    @items = Item.includes(:user).order("created_at DESC")
   end
 
   def new
@@ -19,11 +20,17 @@ before_action :authenticate_user!, only: [:new, :create]
     end
   end
   
+  
+  #def sold_out?購入管理機能時の実装で使用
+    #!!self.order
+  #end
+
 
 private
 
   def item_params
-    
-    params.require(:item).permit(:image, :item_name, :item_info, :category_id, :condition_id, :shipping_cost_id, :prefecture_id, :shipping_day_id, :price).merge(user_id: current_user.id)
+    params.require(:item).permit(:image,:item_name,:item_info,:category_id,:condition_id,:shipping_cost_id,:prefecture_id,:shipping_day_id,:price).merge(user_id: current_user.id)
   end
+
+
 end
