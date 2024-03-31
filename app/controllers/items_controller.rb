@@ -23,6 +23,20 @@ before_action :authenticate_user!, only: [:new, :create]
     @item = Item.find(params[:id])
   end
   
+  def edit
+    @item = Item.find(params[:id])
+  end
+
+  def update
+      item = Item.find(params[:id])
+      
+    if item.update(item_params)
+      redirect_to item_path(item)
+    else
+      render :edit
+    end
+  end
+
   #def sold_out?購入管理機能時の実装で使用
     #!!self.order
   #end
