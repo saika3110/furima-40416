@@ -130,15 +130,15 @@
 
       <% @items.each do |item| %>
         <li class='list'>
-          <%= link_to "#" do %>                        <%# ①商品画像 %>
+          <%= link_to item_path(item) do %>                        <%# ①商品画像 %>
         <div class='item-img-content'>                    
-          <%= image_tag rails_blob_path(item.image), class: "item-img" %>
-          <%# if item.sold_out? %>  <%#この行は商品購入機能に実装%>  
+            <%= image_tag rails_blob_path(item.image), class: "item-img" %>
+              <%# if item.sold_out? %>  <%#この行は商品購入機能に実装%>  
           <div class='sold-out'> 
             <span>Sold Out!!</span><%# ここに「sold out」と表示する記述をする %>
           </div>
-          <%# end %>          <%#この行は商品購入機能に実装%>
-          <%# //商品が売れていればsold outを表示しましょう %>
+              <%# end %>          <%#この行は商品購入機能に実装%>
+              <%# //商品が売れていればsold outを表示しましょう %>
         </div>
         <div class='item-info'>
           <h3 class='item-name'>    
@@ -152,16 +152,13 @@
             </div>
           </div>
         </div>
-        <% end %>
-        <% end %>
-      </li>
-
-
-
+          <% end %>
+      <% end %>
+        </li>
 
     <% if @items.empty? %>
       <li class='list'>
-      <%= link_to 'articles_new' do %>
+      <%= link_to "#" do %>
         <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
         <div class='item-info'>
           <h3 class='item-name'>
@@ -178,8 +175,6 @@
       <% end %>
       </li>
     <% end %>
-     
-
 
     </ul>
   </div>

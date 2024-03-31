@@ -19,11 +19,13 @@ before_action :authenticate_user!, only: [:new, :create]
     end
   end
   
+  def show
+    @item = Item.find(params[:id])
+  end
   
   #def sold_out?購入管理機能時の実装で使用
     #!!self.order
   #end
-
 
 private
 
