@@ -132,7 +132,7 @@
         <li class='list'>
           <%= link_to item_path(item) do %>                        <%# ①商品画像 %>
         <div class='item-img-content'>                    
-            <%= image_tag rails_blob_path(item.image), class: "item-img" %>
+            <%= image_tag item.image, class: "item-img" %>
               <%# if item.sold_out? %>  <%#この行は商品購入機能に実装%>  
           <div class='sold-out'> 
             <span>Sold Out!!</span><%# ここに「sold out」と表示する記述をする %>
