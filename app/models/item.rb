@@ -12,17 +12,12 @@ class Item < ApplicationRecord
   
   #空の投稿を保存できないようにする
   validates :category_id, :condition_id, :shipping_cost_id, :prefecture_id, :shipping_day_id, :image, :item_name, :item_info, :price, presence: true
-
   #ジャンルの選択が「---」の時は保存できないようにする
   validates :category_id, :condition_id, :shipping_cost_id, :prefecture_id, :shipping_day_id, numericality: { other_than: 1, message: "can't be blank" }
 
   validates :price, numericality: { only_integer: true , greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
 
-
-
-
-   # def sold_out?購入管理機能の時に実装する
-    # self.order が存在する場合は true、存在しない場合は false を返す
-    # !self.order 
-   # end
+    def sold_out?
+      self.order.present?
+    end
 end

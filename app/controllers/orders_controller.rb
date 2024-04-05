@@ -1,11 +1,12 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, except: :index
+  before_action :authenticate_user!, only: [:index, :create]
   before_action :set_item, only: [:index, :create]
+  before_action :move_to_index, only: :index
 
+  
   def index
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @order = Order.new
-    #フォームオブジェクトのインスタンスを生成し、インスタンス変数に代入する
     @order_address = OrderAddress.new
   end
 
@@ -15,7 +16,6 @@ class OrdersController < ApplicationController
   def create
     @item = Item.find(params[:item_id])
     @order_address = OrderAddress.new(order_address_params)
-    #binding.pry
     if @order_address.valid?
       pay_item
       @order_address.save
@@ -28,6 +28,10 @@ class OrdersController < ApplicationController
   end
 
     private
+
+    def move_to_index
+    redirect_to root_path if current_user.id == @item.user_id || @item.order.present?
+    end
 
   def set_item
     @item = Item.find(params[:item_id])
