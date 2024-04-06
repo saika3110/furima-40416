@@ -5,7 +5,7 @@ class OrderAddress
   attr_accessor :postal_code, :prefecture_id, :city, :address, :building_name, :phone_number, :user_id, :item_id, :token
 
 with_options presence: true do
-  validates :postal_code
+  validates :postal_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Enter it as follows (e.g. 123-4567)" }
   validates :city
   validates :address
   validates :phone_number, format: { with: /\A\d{10,11}\z/, message: "is invalid. Input only 10 or 11 numbers" }
@@ -14,11 +14,6 @@ with_options presence: true do
   validates :token
 end
   validates :prefecture_id, numericality: { other_than: 1, message: "can't be blank" }
-  
-
-  
-# 数字3桁、ハイフン、数字4桁の並びのみ許可する
-validates :postal_code, presence: true, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Enter it as follows (e.g. 123-4567)"}
 
   def save
     # 注文記録管理を保存し、変数Order?に代入する

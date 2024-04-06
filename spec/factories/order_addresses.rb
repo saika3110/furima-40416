@@ -8,11 +8,5 @@ FactoryBot.define do
     phone_number { '00000000000' }
     token { SecureRandom.urlsafe_base64 }  
 
-    after(:build) do |order_address|
-    user = create(:user)
-    item = create(:item)
-    order_address.user_id = user.id
-    order_address.item_id = item.id
-    end
   end
 end
