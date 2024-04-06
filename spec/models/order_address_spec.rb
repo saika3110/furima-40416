@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe OrderAddress, type: :model do
 before do
     user = FactoryBot.create(:user)
+    item = FactoryBot.create(:item)
     @order_address = FactoryBot.build(:order_address, user_id: user.id)
   end
 
@@ -17,6 +18,17 @@ before do
         @order_address.building_name = ''
         @order_address.phone_number = '09012345678'
         expect(@order_address).to be_valid
+      end
+      it 'phone_numberが10桁以上であれば保存できる' do
+        @order_address.phone_number = '09012345678'
+        expect(@order_address).to be_valid
+      end
+      it 'item_idとtokenが空でない場合、保存できる' do
+          user = FactoryBot.create(:user)
+          item = FactoryBot.create(:item)
+          @order_address = FactoryBot.build(:order_address, user_id: user.id, item_id: item.id)
+          @order_address.phone_number = '09012345678'
+          expect(@order_address).to be_valid
       end
     end
 
@@ -58,6 +70,24 @@ before do
           expect(@order_address.errors.full_messages).to include("Phone number can't be blank")
       end
 
+      it 'phone_number（電話番号）が9桁以下だと保存できないこと' do
+          @order_address.phone_number = '123456789' # 9桁の数字
+          @order_address.valid?
+          expect(@order_address.errors.full_messages).to include("Phone number is invalid. Input only 10 or 11 numbers")
+      end
+
+      it 'phone_number（電話番号）が12桁以上だと保存できないこと' do
+          @order_address.phone_number = '123456789012' # 12桁の数字
+          @order_address.valid?
+          expect(@order_address.errors.full_messages).to include("Phone number is invalid. Input only 10 or 11 numbers")
+      end
+
+      it 'phone_number（電話番号）に半角数字以外が含まれると保存できないこと' do
+          @order_address.phone_number = '123456abcd' # 半角数字以外の文字を含む
+          @order_address.valid?
+          expect(@order_address.errors.full_messages).to include("Phone number is invalid. Input only 10 or 11 numbers")
+      end
+
       it 'userが紐付いていないと保存できないこと' do
           @order_address.user_id = nil
           @order_address.valid?
@@ -74,19 +104,6 @@ before do
           @order_address.token = nil
           @order_address.valid?
           expect(@order_address.errors.full_messages).to include("Token can't be blank")
-      end
-
-      it 'item_idとtokenが空でない場合、保存できる' do
-          user = FactoryBot.create(:user)
-          item = FactoryBot.create(:item)
-          @order_address = FactoryBot.build(:order_address, user_id: user.id, item_id: item.id)
-          @order_address.phone_number = '09012345678'
-          expect(@order_address).to be_valid
-      end
-
-      it 'phone_numberが10桁以上であれば保存できる' do
-        @order_address.phone_number = '09012345678'
-        expect(@order_address).to be_valid
       end
 
     end

@@ -5,9 +5,14 @@ FactoryBot.define do
     city { '東京都' }
     address { '1-1' }
     building_name { '東京ハイツ' }
-    phone_number { 00000000000 }
-    user_id { FactoryBot.create(:user).id } # user_idを追加
-    item_id { FactoryBot.create(:item).id } # item_idを追加
-    token { SecureRandom.urlsafe_base64 }  # tokenを追加 
+    phone_number { '00000000000' }
+    token { SecureRandom.urlsafe_base64 }  
+
+    after(:build) do |order_address|
+    user = create(:user)
+    item = create(:item)
+    order_address.user_id = user.id
+    order_address.item_id = item.id
+    end
   end
 end
