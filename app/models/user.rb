@@ -19,5 +19,5 @@ validates :birth_date, presence: true
 validates :password, format: { with: VALID_PASSWORD_REGEX, message: 'is invalid. Input half-width characters and numbers.' }
 
 has_many :items
-
+has_many :orders
 end

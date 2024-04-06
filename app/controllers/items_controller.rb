@@ -6,6 +6,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.includes(:user).order("created_at DESC")
+    @order = Order.new
   end
 
 
@@ -28,7 +29,10 @@ class ItemsController < ApplicationController
   def show
   end
   
-  def edit   
+  def edit
+    if @item.order.present? || current_user.id != @item.user_id
+        redirect_to root_path
+    end
   end
 
   def update         # @item = Item.find(params[:id])の部分は「set_itemメソッドに移行」
@@ -44,10 +48,6 @@ class ItemsController < ApplicationController
     redirect_to root_path
   end
 
-
-  #def sold_out?購入管理機能時の実装で使用
-    #!!self.order
-  #end
 
 private
 

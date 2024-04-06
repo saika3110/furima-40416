@@ -130,24 +130,24 @@
 
       <% @items.each do |item| %>
         <li class='list'>
-          <%= link_to item_path(item) do %>                        <%# ①商品画像 %>
+          <%= link_to item_path(item) do %> 
         <div class='item-img-content'>                    
-            <%= image_tag item.image, class: "item-img" %>
-              <%# if item.sold_out? %>  <%#この行は商品購入機能に実装%>  
+          <%= image_tag item.image, class: "item-img" %>
+            <% if item.sold_out? %> 
           <div class='sold-out'> 
-            <span>Sold Out!!</span><%# ここに「sold out」と表示する記述をする %>
+            <span>Sold Out!!</span>
           </div>
-              <%# end %>          <%#この行は商品購入機能に実装%>
-              <%# //商品が売れていればsold outを表示しましょう %>
+            <% end %> 
+
         </div>
         <div class='item-info'>
           <h3 class='item-name'>    
-            <%= item.item_name %><%# ③商品名 %>
+            <%= item.item_name %>
           </h3>
           <div class='item-price'>
-            <span><%= item.price %>円<br><%= item.shipping_cost.name %></span><%# ④商品の値段 %>
+            <span><%= item.price %>円<br><%= item.shipping_cost.name %></span>
             <div class='star-btn'>
-              <%= image_tag "star.png", class:"star-icon" %><%# ⑤商品の配送料負担 %>
+              <%= image_tag "star.png", class:"star-icon" %>
               <span class='star-count'>0</span>
             </div>
           </div>
