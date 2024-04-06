@@ -130,15 +130,15 @@
 
       <% @items.each do |item| %>
         <li class='list'>
-          <%= link_to item_path(item) do %>                        <%# ①商品画像 %>
+          <%= link_to item_path(item) do %> 
         <div class='item-img-content'>                    
           <%= image_tag item.image, class: "item-img" %>
-            <% if item.sold_out? %>  <%#この行は商品購入機能に実装%>  
+            <% if item.sold_out? %> 
           <div class='sold-out'> 
-            <span>Sold Out!!</span><%# ここに「sold out」と表示する記述をする %>
+            <span>Sold Out!!</span>
           </div>
-            <% end %>          <%#この行は商品購入機能に実装%>
-              <%# //商品が売れていればsold outを表示しましょう %>
+            <% end %> 
+
         </div>
         <div class='item-info'>
           <h3 class='item-name'>    

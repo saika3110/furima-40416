@@ -6,15 +6,11 @@ class OrdersController < ApplicationController
   
   def index
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-    @order = Order.new
     @order_address = OrderAddress.new
   end
 
-  def new
-  end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_address = OrderAddress.new(order_address_params)
     if @order_address.valid?
       pay_item
@@ -22,7 +18,6 @@ class OrdersController < ApplicationController
       redirect_to root_path
     else
       gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-      puts @order_address.errors.full_messages
       render :index, status: :unprocessable_entity
     end
   end
