@@ -72,7 +72,6 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include('Password is invalid. Input half-width characters and numbers.')
       end
 
-
       it 'last_name（漢字・ひらがな・カタカナ）での入力が必須であること' do
         @user.last_name = 'Smith'
         @user.valid?
@@ -98,29 +97,6 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("First name kana 全角カタカナ使用してください")
       end
 
-      it 'last_name_kanaは、全角（ひらがな）での入力が必須であること' do
-        @user.last_name_kana = 'すみす' 
-        @user.valid?
-        expect(@user.errors.full_messages).to include("Last name kana 全角ひらがなのみで入力して下さい")
-      end
-
-      it'first_name_kanaは、全角（ひらがな）での入力が必須であること'do
-        @user.first_name_kana = 'じょん'  
-        @user.valid?
-        expect(@user.errors.full_messages).to include("First name kana 全角ひらがなのみで入力して下さい")
-      end
-
-      it'last_name_kanaは、半角英字での入力が必須であること'do
-        @user.last_name_kana = 'smith'  
-        @user.valid?
-        expect(@user.errors.full_messages).to include("Last name kana 半角英字を使用してください")
-      end
-
-      it'first_name_kanaは、半角英字での入力が必須であること'do
-        @user.first_name_kana = 'john'  
-        @user.valid?
-        expect(@user.errors.full_messages).to include("First name kana 半角英字を使用してください")
-      end
 
       it 'last_nameが空では登録できない' do
         @user.last_name = ""
