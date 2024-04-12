@@ -17,4 +17,5 @@ validates :password, format: { with: VALID_PASSWORD_REGEX, message: 'is invalid.
 
 has_many :items
 has_many :orders
+has_many :likes
 end

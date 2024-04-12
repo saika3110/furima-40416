@@ -2,6 +2,7 @@ class Item < ApplicationRecord
   belongs_to :user
   has_one    :order
   has_one_attached :image
+  has_many :likes
 
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to_active_hash :category
@@ -20,4 +21,9 @@ class Item < ApplicationRecord
     def sold_out?
       self.order.present?
     end
+
+    def liked_by?(user)
+      likes.where(user_id: user.id).exists?
+    end
+
 end
