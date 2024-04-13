@@ -108,7 +108,7 @@
 .favorite-btn {
   border-radius: 40px;
   width: 15vw;
-  min-width: 200px;
+  min-width: 400px;
   color: rgb(249, 75, 0);
   border: 2px solid #ffb340;
   display: flex;
@@ -117,9 +117,14 @@
   margin-right: 20px;
 }
 
-.favorite-star-icon {
-  margin-right: 5px;
+.star {
+  font-size: 10px;
+  /* あるいは任意の大きさ */
 }
+
+/* .favorite-star-icon {
+  margin-right: 5px;
+}*/
 
 .report-btn {
   border-radius: 40px;

@@ -293,16 +293,16 @@ a {
 }
 
 
-.star-btn {
+/*.star-btn {
   display: flex;
   align-items: center;
-}
+}*/
 
-.star-icon {
+/*.star-icon {
   height: 2vh;
   width: 2vh;
   margin-right: 0.5vw;
-}
+}*/
 
 .star-count {
   font-size: 2vh;
